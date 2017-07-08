@@ -3,9 +3,9 @@
 one:
   email: MyString
   token: 
-  password: MyString
+  password_digest: MyString
 
 two:
   email: MyString
   token: 
-  password: MyString
+  password_digest: MyString

@@ -6,7 +6,10 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get users_url, as: :json
+    user = User.new(password: 'abcdefg')
+    user.save
+
+    get users_url, as: :json, headers: { 'AUTHORIZATION': user.token }
     assert_response :success
   end
 
