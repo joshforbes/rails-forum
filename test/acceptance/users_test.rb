@@ -13,6 +13,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 201
+    assert_not_nil(User.where(name: 'Test user', email: 'test@user.com').first)
   end
 
   test 'should update user' do
