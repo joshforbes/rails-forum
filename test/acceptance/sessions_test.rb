@@ -17,10 +17,11 @@ class SessionsTest < ActionDispatch::IntegrationTest
 
   test 'should destroy the current users token' do
     user = create(:user)
+    original_token = user.token
 
-    delete sessions_url, as: :json, headers: { 'AUTHORIZATION': user.token }
+    delete sessions_url, as: :json, headers: { 'AUTHORIZATION': original_token }
 
     assert_response 204
-    assert_nil user.reload.token
+    assert_not_equal original_token, user.reload.token
   end
 end

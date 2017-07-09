@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    current_user.revoke_token
+    current_user.regenerate_token
 
     head :no_content
   end

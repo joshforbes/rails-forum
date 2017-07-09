@@ -7,8 +7,8 @@ class User < ApplicationRecord
 
   has_many :posts
 
-  def revoke_token
-    self.token = nil
+  def regenerate_token
+    self.token = self.class.generate_unique_secure_token
     self.save!(validate: false)
 
     self
