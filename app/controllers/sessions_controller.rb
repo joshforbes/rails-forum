@@ -12,8 +12,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    current_user.token = nil
-    current_user.save!(validate: false)
+    current_user.revoke_token
 
     head :no_content
   end
