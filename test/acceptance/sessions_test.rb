@@ -15,6 +15,21 @@ class SessionsTest < ActionDispatch::IntegrationTest
     assert_equal user.token, json_response['token']
   end
 
+  test 'does not authenticate with an invalid password' do
+    user = create(:user)
+
+    post sessions_url, params: {
+        user: {
+            email: user.email,
+            password: 'Invalid Password'
+        }
+    }, as: :json
+
+    p json_response
+
+    assert_response 401
+  end
+
   test 'should destroy the current users token' do
     user = create(:user)
     original_token = user.token
