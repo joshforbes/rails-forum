@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(session_params[:password])
       render json: { user: UserSerializer.new(user).attributes, token: user.token }, status: :ok
     else
-      render json: '', status: :unauthorized
+      render status: :unauthorized
     end
   end
 
