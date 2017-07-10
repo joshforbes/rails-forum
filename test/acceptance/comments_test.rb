@@ -48,6 +48,19 @@ class CommentsTest < ActionDispatch::IntegrationTest
     assert_equal('Update comment', comment.reload.body)
   end
 
+  test 'updating a comment has authorization' do
+    comment = create(:comment)
+    unauthorized_user = create(:user)
+
+    patch comment_url(comment), params: {
+        comment: {
+            body: 'Update comment',
+        }
+    }, as: :json, headers: { 'AUTHORIZATION': unauthorized_user.token }
+
+    assert_response :forbidden
+  end
+
   test 'should destroy comment' do
     comment = create(:comment)
 
@@ -56,5 +69,14 @@ class CommentsTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 204
+  end
+
+  test 'destroying a comment has authorization' do
+    comment = create(:comment)
+    unauthorized_user = create(:user)
+
+    delete comment_url(comment), as: :json, headers: { 'AUTHORIZATION': unauthorized_user.token }
+
+    assert_response :forbidden
   end
 end

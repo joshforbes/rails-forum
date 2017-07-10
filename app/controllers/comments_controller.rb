@@ -25,6 +25,7 @@ class CommentsController < ApplicationController
 
   def update
     comment = Comment.find(params[:id])
+    authorize comment
 
     if comment.update(comment_params)
       render json: comment
@@ -35,6 +36,7 @@ class CommentsController < ApplicationController
 
   def destroy
     comment = Comment.find(params[:id])
+    authorize comment
 
     comment.destroy
   end

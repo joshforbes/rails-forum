@@ -52,6 +52,20 @@ class PostsTest < ActionDispatch::IntegrationTest
     assert_equal('New content', post.body)
   end
 
+  test 'updating a post has authorization' do
+    post = create(:post)
+    unauthorized_user = create(:user)
+
+    patch post_url(post), params: {
+        post: {
+            title: 'New title',
+            body: 'New content',
+        }
+    }, as: :json, headers: { 'AUTHORIZATION': unauthorized_user.token }
+
+    assert_response :forbidden
+  end
+
   test 'should destroy post' do
     post = create(:post)
 
@@ -60,5 +74,14 @@ class PostsTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 204
+  end
+
+  test 'destroying a post has authorization' do
+    post = create(:post)
+    unauthorized_user = create(:user)
+
+    delete post_url(post), as: :json, headers: { 'AUTHORIZATION': unauthorized_user.token }
+
+    assert_response :forbidden
   end
 end

@@ -25,8 +25,6 @@ class SessionsTest < ActionDispatch::IntegrationTest
         }
     }, as: :json
 
-    p json_response
-
     assert_response 401
   end
 
